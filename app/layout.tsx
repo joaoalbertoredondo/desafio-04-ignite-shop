@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
+import CartProvider from "@/components/Providers";
+import ShoppingCartModal from "@/components/ShoppingCartModal";
+import Header from "@/components/Header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="p-10">
+      <body className={inter.className}>
+        <ThemeProvider storageKey="igniteshop-theme" defaultTheme="dark">
+          <CartProvider>
+            <Header />
+            <ShoppingCartModal />
+            {children}
+          </CartProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
